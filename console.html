@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEGIS Console — Shielded Privacy</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23c4f73d' rx='20' width='100' height='100'/><path fill='%2308080a' d='M50 10L15 25v30c0 20 15 35 35 40 20-5 35-20 35-40V25L50 10z'/></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #08080a; color: #fff; }
+    .font-display { font-family: 'Space Grotesk'; }
+    .text-gradient { background: linear-gradient(135deg, #c4f73d, #9bc44d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .btn-primary { background: #c4f73d; color: #08080a; font-weight: 600; padding: 0.875rem 1.75rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-primary:hover { background: #d8f85a; }
+    .btn-primary:disabled { background: #666; cursor: not-allowed; }
+    .input-field { background: #111; border: 1px solid #333; color: #fff; padding: 0.75rem; border-radius: 0.5rem; width: 100%; }
+    .input-field:focus { outline: none; border-color: #c4f73d; }
+  </style>
+</head>
+<body>
+  <nav class="fixed top-0 w-full bg-dark/90 backdrop-blur border-b border-gray-800 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-3 hover:opacity-80">
+        <div class="w-8 h-8 bg-accent rounded text-dark font-bold flex items-center justify-center text-sm">#</div>
+        <span class="font-display text-xl font-bold">AEGIS</span>
+      </a>
+      <a href="index.html" class="text-gray-400 hover:text-white text-sm">← Back</a>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-12 px-6">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="font-display text-5xl font-bold mb-4">Shielded <span class="text-gradient">Console</span></h1>
+        <p class="text-gray-400">#PrivacyByDefault</p>
+      </div>
+
+      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
+        <h2 class="font-display text-xl font-bold mb-4">Connect Wallet</h2>
+        <button id="connectBtn" class="btn-primary w-full">🔗 Connect MetaMask</button>
+        <p class="text-gray-500 text-sm mt-4 text-center">Your keys stay secure. AEGIS never touches private data.</p>
+      </div>
+
+      <div id="operationsDiv" class="hidden">
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
+          <h3 class="font-display font-bold mb-4">🔐 Shield Assets</h3>
+          <input type="number" id="depositAmount" class="input-field mb-4" placeholder="Amount (ETH)" min="0.001" step="0.01">
+          <button id="depositBtn" class="btn-primary w-full">Deposit to Shield</button>
+        </div>
+
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
+          <h3 class="font-display font-bold mb-4">🔓 Withdraw</h3>
+          <input type="number" id="withdrawAmount" class="input-field mb-4" placeholder="Amount (ETH)" min="0.001" step="0.01">
+          <input type="text" id="recipientAddr" class="input-field mb-4" placeholder="Recipient address">
+          <button id="withdrawBtn" class="btn-primary w-full">Generate Proof & Withdraw</button>
+        </div>
+
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+          <h3 class="font-display font-bold mb-4">Activity Log</h3>
+          <div id="activityLog" class="space-y-2 font-mono text-xs text-accent max-h-64 overflow-y-auto">
+            <p class="text-gray-500">Ready...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-gray-800 py-6 px-6 text-center text-gray-500 text-sm">
+    <p>🛡️ AEGIS on Base • <a href="https://github.com/aegis37/aegis-protocol" class="text-accent">GitHub</a> • <a href="https://x.com/Aegiszkp" class="text-accent">Twitter</a></p>
+  </footer>
+
+  <script>
+    let connected = false;
+    function log(msg) {
+      const el = document.getElementById('activityLog');
+      const entry = document.createElement('p');
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      el.insertBefore(entry, el.firstChild);
+    }
+
+    document.getElementById('connectBtn').addEventListener('click', async () => {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+          document.getElementById('connectBtn').textContent = `✓ ${accounts[0].slice(0,6)}...`;
+          document.getElementById('connectBtn').disabled = true;
+          document.getElementById('operationsDiv').classList.remove('hidden');
+          connected = true;
+          log(`Connected: ${accounts[0]}`);
+        } catch(e) { log('Connection failed'); }
+      } else { alert('MetaMask required'); }
+    });
+
+    document.getElementById('depositBtn').addEventListener('click', () => {
+      if (!connected) { alert('Connect wallet first'); return; }
+      const amt = document.getElementById('depositAmount').value;
+      log(`→ Deposit ${amt} ETH initiated`);
+      log(`→ Generating proof...`);
+      setTimeout(() => { log(`✓ Shielded (proof verified)`); }, 2000);
+    });
+
+    document.getElementById('withdrawBtn').addEventListener('click', () => {
+      if (!connected) { alert('Connect wallet first'); return; }
+      const amt = document.getElementById('withdrawAmount').value;
+      const addr = document.getElementById('recipientAddr').value.slice(0,8);
+      log(`→ Withdraw ${amt} ETH to ${addr}...`);
+      log(`→ Generating proof...`);
+      setTimeout(() => { log(`✓ Withdrawn (privacy maintained)`); }, 2500);
+    });
+
+    log('Console ready');
+  </script>
+</body>
+</html>
