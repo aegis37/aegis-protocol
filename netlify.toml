@@ -1,0 +1,13 @@
+[build]
+  publish = "frontend"
+  command = "echo 'Static site'"
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/console"
+  to = "/console.html"
+  status = 200
