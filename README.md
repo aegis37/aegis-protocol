@@ -28,5 +28,7 @@ User → AEGIS SDK → AegisPool → Base Chain
 ```
 
 ## Resources
+- Website: https://aegiszkp.netlify.app/
 - Docs: docs.aegis.sh (coming soon)
-- Twitter: @AegisProtocol
+- Twitter: @Aegiszkp
+- GitHub: github.com/aegis37/aegis-protocol
