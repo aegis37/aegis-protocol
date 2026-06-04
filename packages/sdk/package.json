@@ -1,7 +1,0 @@
-{
-  "name": "@aegis/sdk",
-  "version": "0.0.0",
-  "description": "Agent SDK — shield, send, unshield, balance",
-  "main": "src/index.ts",
-  "private": true
-}

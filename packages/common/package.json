@@ -1,7 +1,0 @@
-{
-  "name": "@aegis/common",
-  "version": "0.0.0",
-  "description": "Crypto spine — notes, commitments, nullifiers, keys, Merkle",
-  "main": "src/index.ts",
-  "private": true
-}
