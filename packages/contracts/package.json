@@ -1,0 +1,6 @@
+{
+  "name": "@aegis/contracts",
+  "version": "0.0.0",
+  "description": "Smart contracts — AegisShield, AegisPool, Poseidon, verifiers",
+  "private": true
+}
