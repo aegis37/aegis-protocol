@@ -1,49 +1,79 @@
-1|# AEGIS — Programmable Privacy Infrastructure
-2|
-3|🛡️ Privacy layer for Base blockchain using zero-knowledge proofs.
-4|
-5|## Features
-6|
-7|- Encrypted transfers with ZK proofs
-8|- Agent-compatible privacy shielding
-9|- On-chain activity masking
-10|
-11|## Quick Start
-12|
-13|```bash
-14|# Clone
-15|git clone https://github.com/aegis37/aegis-protocol.git
-16|cd aegis-protocol
-17|
-18|# Open website
-19|open index.html  # or run local server
-20|```
-21|
-22|## Project Structure
-23|
+# AEGIS — Programmable Privacy Infrastructure
+
+> Privacy layer for Base blockchain. Shielded pools · ZK proofs · Agent-compatible by design.
+> Encrypted transfers with zero-knowledge proofs — privacy as infrastructure, not an afterthought.
+
+Full-stack monorepo. Landing page + console UI live at [aegiszkp.netlify.app](https://aegiszkp.netlify.app).
+
+- **[SPEC.md](./SPEC.md)** — design specification (architecture, cryptography, contracts)
+- **[BUILD.md](./BUILD.md)** — ordered build plan (P0 → P6, with verifiable gates)
+
+**CA:** *Coming soon — contracts not yet deployed.*
+
+---
+
+## Status
+
+| Phase | Package(s) | State | Gate |
+|---|---|---|---|
+| P0 Scaffold | — | ✅ | Monorepo structure, SPEC, BUILD, README |
+| P1 Crypto foundations | `common` | 🔜 | — |
+| P2 Circuits | `circuits` | 🔜 | — |
+| P3 Contracts | `contracts` | 🔜 | — |
+| P4 Relayer / Route | `route` | 🔜 | — |
+| P5 SDK | `sdk` | 🔜 | — |
+| P6 Harden | — | 🔜 | — |
+
+---
+
+## Packages
+
+| Package | Status | Role |
+|---|---|---|
+| `packages/contracts` | Draft | `AegisShield.sol` — shielded pool (deposit / transfer / withdraw) · `AegisPool.sol` — liquidity management |
+| `packages/common` | WIP | Crypto spine — Poseidon hash, notes, nullifiers, Merkle tree, key derivation |
+| `packages/circuits` | WIP | Circom/Groth16 join-split circuits (1×2, 2×2) + proving harness |
+| `packages/route` | Planned | Indexer + relayer + HTTP API for agent interaction |
+| `packages/sdk` | Planned | `@aegis/sdk` — shield / send / unshield / balance + agent-tool adapter |
+
+---
+
+## Develop
+
+```bash
+# Clone
+git clone https://github.com/aegis37/aegis-protocol.git
+cd aegis-protocol
+
+# Install deps
+pnpm install
+pnpm build && pnpm typecheck && pnpm test
+
+# Smart contracts (Foundry)
+cd packages/contracts && forge build && forge test
+
+# Circuits (needs circom 2.x + snarkjs)
+cd packages/circuits && ./scripts/build.sh && ./scripts/prove.sh
 ```
-aegis-protocol/
-├── packages/
-│   ├── contracts/       # Smart contracts (Solidity)
-│   │   ├── AegisShield.sol
-│   │   └── AegisPool.sol
-│   ├── common/          # Crypto spine (WIP)
-│   └── sdk/             # Developer SDK (WIP)
-├── index.html           # Landing page + console UI
-├── SPEC.md              # Design specification
-├── BUILD.md             # Build plan
-├── README.md
-├── package.json
-├── pnpm-workspace.yaml
-└── .gitignore
-```
-34|
-35|## Links
-36|
-37|- **Twitter (X):** [@Aegiszkp](https://x.com/Aegiszkp)
-38|- **Website:** [https://aegiszkp.netlify.app](https://aegiszkp.netlify.app)
-39|
-40|## License
-41|
-42|MIT
-43|
+
+---
+
+## Remaining external ops (P6)
+
+1. **Trusted setup** — real multi-party ceremony (public transcript), regenerate verifiers
+2. **Audit** — independent review of contracts + circuits
+3. **Deploy** — Base Sepolia testnet → Base Mainnet
+4. **Persistence** — wire Postgres/Railway for the route service
+
+---
+
+## Links
+
+- **Website:** [aegiszkp.netlify.app](https://aegiszkp.netlify.app)
+- **X (Twitter):** [@Aegiszkp](https://x.com/Aegiszkp)
+
+---
+
+## License
+
+MIT
