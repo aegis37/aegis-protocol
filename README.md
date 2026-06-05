@@ -8,7 +8,7 @@ Full-stack monorepo. Landing page + console UI live at [aegiszkp.netlify.app](ht
 - **[SPEC.md](./SPEC.md)** — design specification (architecture, cryptography, contracts)
 - **[BUILD.md](./BUILD.md)** — ordered build plan (P0 → P6, with verifiable gates)
 
-**CA:** *Coming soon — contracts not yet deployed.*
+**CA:** `0x04C9733980c1703ED339769AFF6e6EBa80535B07` — [View on BaseScan](https://basescan.org/token/0x04C9733980c1703ED339769AFF6e6EBa80535B07)
 
 ---
 

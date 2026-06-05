@@ -1,440 +1,457 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AEGIS — Programmable Privacy Layer</title>
-  <meta name="description" content="Shield your on-chain activity with zero-knowledge proofs. AEGIS provides modular privacy tools for individuals, applications, and autonomous agents.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23c4f73d' rx='20' width='100' height='100'/><path fill='%2308080a' d='M50 10L15 25v30c0 20 15 35 35 40 20-5 35-20 35-40V25L50 10z'/></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: #08080a; color: #fff; }
-    .font-display { font-family: 'Space Grotesk'; }
-    .text-gradient { background: linear-gradient(135deg, #c4f73d, #9bc44d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .btn-primary { background: #c4f73d; color: #08080a; font-weight: 600; padding: 0.875rem 1.75rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.2s; }
-    .btn-primary:hover { background: #d8f85a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,247,61,0.3); }
-    .input-field { background: #111; border: 1px solid #333; color: #fff; padding: 0.75rem; border-radius: 0.5rem; width: 100%; }
-    .input-field:focus { outline: none; border-color: #c4f73d; }
-    .hidden { display: none !important; }
-    .docs-content { line-height: 1.8; }
-    .docs-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; color: #c4f73d; }
-    .docs-content p { margin-bottom: 1rem; color: #ccc; }
-    .docs-content ul { margin-left: 1.5rem; margin-bottom: 1rem; }
-    .docs-content li { margin-bottom: 0.5rem; }
-    .docs-content code { background: #1a1a1a; padding: 0.2rem 0.4rem; border-radius: 0.25rem; color: #c4f73d; font-family: monospace; }
-  </style>
-</head>
-<body>
-  <!-- Navigation -->
-  <nav class="fixed top-0 w-full bg-dark/90 backdrop-blur border-b border-gray-800 z-50">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-accent rounded text-dark font-bold flex items-center justify-center">#</div>
-        <span class="font-display text-2xl font-bold">AEGIS</span>
-      </div>
-      <div class="flex gap-6 items-center">
-        <button id="navHome" class="text-gray-400 hover:text-white text-sm">Home</button>
-        <button id="navDocs" class="text-gray-400 hover:text-white text-sm">Docs</button>
-        <a href="https://x.com/Aegiszkp" target="_blank" class="text-gray-400 hover:text-white text-sm">X</a>
-        <a href="https://github.com/aegis37/aegis-protocol" target="_blank" class="text-gray-400 hover:text-white text-sm">GitHub</a>
-        <button id="navConsole" class="btn-primary text-sm">Launch Console</button>
+1|<!DOCTYPE html>
+2|<html lang="en">
+3|<head>
+4|  <meta charset="UTF-8">
+5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+6|  <title>AEGIS — Programmable Privacy Layer</title>
+7|  <meta name="description" content="Shield your on-chain activity with zero-knowledge proofs. AEGIS provides modular privacy tools for individuals, applications, and autonomous agents.">
+8|  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23c4f73d' rx='20' width='100' height='100'/><path fill='%2308080a' d='M50 10L15 25v30c0 20 15 35 35 40 20-5 35-20 35-40V25L50 10z'/></svg>">
+9|  <script src="https://cdn.tailwindcss.com"></script>
+10|  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+11|  <style>
+12|    * { margin: 0; padding: 0; box-sizing: border-box; }
+13|    html { scroll-behavior: smooth; }
+14|    body { font-family: 'Inter', -apple-system, sans-serif; background: #08080a; color: #fff; }
+15|    .font-display { font-family: 'Space Grotesk'; }
+16|    .text-gradient { background: linear-gradient(135deg, #c4f73d, #9bc44d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+17|    .btn-primary { background: #c4f73d; color: #08080a; font-weight: 600; padding: 0.875rem 1.75rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.2s; }
+18|    .btn-primary:hover { background: #d8f85a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,247,61,0.3); }
+19|    .input-field { background: #111; border: 1px solid #333; color: #fff; padding: 0.75rem; border-radius: 0.5rem; width: 100%; }
+20|    .input-field:focus { outline: none; border-color: #c4f73d; }
+21|    .hidden { display: none !important; }
+22|    .docs-content { line-height: 1.8; }
+23|    .docs-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; color: #c4f73d; }
+24|    .docs-content p { margin-bottom: 1rem; color: #ccc; }
+25|    .docs-content ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+26|    .docs-content li { margin-bottom: 0.5rem; }
+27|    .docs-content code { background: #1a1a1a; padding: 0.2rem 0.4rem; border-radius: 0.25rem; color: #c4f73d; font-family: monospace; }
+28|  </style>
+29|</head>
+30|<body>
+31|  <!-- Navigation -->
+32|  <nav class="fixed top-0 w-full bg-dark/90 backdrop-blur border-b border-gray-800 z-50">
+33|    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+34|      <div class="flex items-center gap-3">
+35|        <div class="w-8 h-8 bg-accent rounded text-dark font-bold flex items-center justify-center">#</div>
+36|        <span class="font-display text-2xl font-bold">AEGIS</span>
+37|      </div>
+38|      <div class="flex gap-6 items-center">
+39|        <button id="navHome" class="text-gray-400 hover:text-white text-sm">Home</button>
+40|        <button id="navDocs" class="text-gray-400 hover:text-white text-sm">Docs</button>
+41|        <a href="https://x.com/Aegiszkp" target="_blank" class="text-gray-400 hover:text-white text-sm">X</a>
+42|        <a href="https://github.com/aegis37/aegis-protocol" target="_blank" class="text-gray-400 hover:text-white text-sm">GitHub</a>
+43|        <button id="navConsole" class="btn-primary text-sm">Launch Console</button>
+44|      </div>
+45|    </div>
+46|  </nav>
+47|
+48|  <!-- HOME PAGE -->
+49|  <div id="homePage" class="pt-32">
+50|    <section class="max-w-6xl mx-auto px-6 py-24 text-center">
+51|      <div class="mb-6 inline-block bg-green-900/20 border border-green-800 rounded-full px-4 py-2 text-green-400 text-sm">● Live on Base</div>
+52|      <h1 class="font-display text-6xl font-bold mb-6 leading-tight">
+53|        Programmable<br><span class="text-gradient">Privacy</span> Infrastructure
+54|      </h1>
+55|      <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+56|        Shield your on-chain activity with zero-knowledge proofs. AEGIS provides modular privacy tools for individuals, applications, and autonomous agents on Base.
+57|      </p>
+58|      <div class="flex justify-center gap-4">
+59|        <button id="btnLaunchConsole" class="btn-primary">Launch Console</button>
+60|        <button id="btnReadDocs" class="border border-gray-700 text-white px-6 py-3 rounded-lg hover:border-accent transition">Read Docs</button>
+61|      </div>
+62|    </section>
+63|
+64|    <section id="features" class="max-w-6xl mx-auto px-6 py-24">
+65|      <h2 class="font-display text-4xl font-bold mb-16 text-center">Built for Privacy</h2>
+66|      <div class="grid md:grid-cols-3 gap-6">
+67|        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-accent transition">
+68|          <div class="text-3xl mb-4">🔐</div>
+69|          <h3 class="font-display font-bold mb-2">Encrypted Transfers</h3>
+70|          <p class="text-gray-400 text-sm">Transactions appear as generic pool deposits, hiding sender, recipient, and amount.</p>
+71|        </div>
+72|        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-accent transition">
+73|          <div class="text-3xl mb-4">⚡</div>
+74|          <h3 class="font-display font-bold mb-2">ZK Proof Verification</h3>
+75|          <p class="text-gray-400 text-sm">Cryptographic proofs validate transactions without exposing underlying data.</p>
+76|        </div>
+77|        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-accent transition">
+78|          <div class="text-3xl mb-4">🤖</div>
+79|          <h3 class="font-display font-bold mb-2">Agent Compatible</h3>
+80|          <p class="text-gray-400 text-sm">Designed for AI agents. Shield autonomous on-chain activity from surveillance.</p>
+81|        </div>
+82|      </div>
+83|    </section>
+84|
+85|    <section id="how" class="max-w-6xl mx-auto px-6 py-24 bg-gray-900/30">
+86|      <h2 class="font-display text-4xl font-bold mb-16 text-center">How It Works</h2>
+87|      <div class="grid md:grid-cols-3 gap-8">
+88|        <div class="text-center">
+89|          <div class="w-12 h-12 bg-accent text-dark font-bold rounded-full flex items-center justify-center text-xl mx-auto mb-4">1</div>
+90|          <h3 class="font-display font-bold mb-2">Deposit</h3>
+91|          <p class="text-gray-400 text-sm">Send ETH to AEGIS Shield. Funds enter the privacy pool.</p>
+92|        </div>
+93|        <div class="text-center">
+94|          <div class="w-12 h-12 bg-accent text-dark font-bold rounded-full flex items-center justify-center text-xl mx-auto mb-4">2</div>
+95|          <h3 class="font-display font-bold mb-2">Prove</h3>
+96|          <p class="text-gray-400 text-sm">Generate ZK proof confirming ownership without revealing details.</p>
+97|        </div>
+98|        <div class="text-center">
+99|          <div class="w-12 h-12 bg-accent text-dark font-bold rounded-full flex items-center justify-center text-xl mx-auto mb-4">3</div>
+100|          <h3 class="font-display font-bold mb-2">Withdraw</h3>
+101|          <p class="text-gray-400 text-sm">Transfer to any address. Pool origin is shielded.</p>
+102|        </div>
+103|      </div>
+104|    </section>
+105|
+106|    <section class="max-w-6xl mx-auto px-6 py-24 text-center">
+107|      <h2 class="font-display text-4xl font-bold mb-6">Start Building with AEGIS</h2>
+108|      <p class="text-gray-400 mb-8 text-lg">Privacy should be the default for everyone.</p>
+109|      <button id="btnConsoleBottom" class="btn-primary inline-block">Launch Console →</button>
+110|    </section>
+111|  </div>
+112|
+113|  <!-- DOCS PAGE -->
+114|  <div id="docsPage" class="hidden pt-32 pb-16">
+115|    <div class="max-w-4xl mx-auto px-6">
+116|      <button id="backToDocs" class="text-accent mb-6 hover:text-white transition">← Back to Home</button>
+117|      
+118|      <h1 class="font-display text-5xl font-bold mb-4">AEGIS Documentation</h1>
+119|      <p class="text-gray-400 mb-12">Complete guide to the programmable privacy infrastructure on Base.</p>
+120|
+121|      <div class="docs-content space-y-12">
+122|        <!-- Overview -->
+123|        <section>
+124|          <h2 class="font-display text-3xl font-bold mb-6">Overview</h2>
+125|          <p>AEGIS is a privacy infrastructure protocol designed for Base, enabling on-chain activity to be shielded from public view using zero-knowledge proofs. It provides modular privacy tools for individuals, applications, and autonomous AI agents.</p>
+126|          <p>The protocol consists of two core smart contracts: <code>AegisShield</code> for privacy pool management and <code>AegisPool</code> for liquidity provision.</p>
+127|        </section>
+128|
+129|        <!-- Why Privacy -->
+130|        <section>
+131|          <h2 class="font-display text-3xl font-bold mb-6">Why Privacy Matters</h2>
+132|          <h3>On-Chain Surveillance</h3>
+133|          <p>Every transaction on public blockchains is permanently recorded and visible to everyone. This creates privacy risks for individuals and businesses who want confidential financial activity.</p>
+134|          
+135|          <h3>AI Agent Privacy</h3>
+136|          <p>Autonomous agents making financial decisions on-chain face surveillance risks. AEGIS shields agent transactions from public observation, enabling trustless autonomous operation.</p>
+137|          
+138|          <h3>Regulatory Compliance</h3>
+139|          <p>Privacy-preserving transfers help organizations comply with data protection regulations while maintaining blockchain transparency.</p>
+140|        </section>
+141|
+142|        <!-- Core Concepts -->
+143|        <section>
+144|          <h2 class="font-display text-3xl font-bold mb-6">Core Concepts</h2>
+145|          
+146|          <h3>Zero-Knowledge Proofs</h3>
+147|          <p>ZK proofs allow you to prove knowledge of information without revealing the information itself. AEGIS uses ZK proofs to verify transaction validity without exposing sender, recipient, or amount.</p>
+148|          
+149|          <h3>Privacy Pools</h3>
+150|          <p>AEGIS pools are shared liquidity pools where deposits are mixed. Withdrawals can come from the pool without revealing which deposit a withdrawal originated from, breaking the transaction chain.</p>
+151|          
+152|          <h3>Commitment Hash</h3>
+153|          <p>When depositing, you generate a commitment hash (Poseidon hash) derived from your secret and nullifier. This commitment is stored on-chain but reveals nothing about your deposit.</p>
+154|          
+155|          <h3>Nullifier</h3>
+156|          <p>To prevent double-spending, AEGIS tracks nullifiers. Each withdrawal uses a unique nullifier that is marked as spent, preventing the same note from being withdrawn twice.</p>
+157|        </section>
+158|
+159|        <!-- How It Works -->
+160|        <section>
+161|          <h2 class="font-display text-3xl font-bold mb-6">How It Works</h2>
+162|          
+163|          <h3>Step 1: Deposit</h3>
+164|          <p>You send ETH to the AegisShield contract along with a commitment hash. Your funds are locked in the privacy pool. Your secret and nullifier remain unknown.</p>
+165|          
+166|          <h3>Step 2: Generate Proof</h3>
+167|          <p>When ready to withdraw, you generate a ZK proof that proves:</p>
+168|          <ul>
+169|            <li>You know the secret matching your commitment</li>
+170|            <li>Your nullifier hasn't been used before</li>
+171|            <li>You have sufficient balance</li>
+172|          </ul>
+173|          
+174|          <h3>Step 3: Withdraw</h3>
+175|          <p>You submit the ZK proof to withdraw funds to any address. The smart contract verifies the proof without learning your identity or original deposit details. Your nullifier is marked as spent.</p>
+176|        </section>
+177|
+178|        <!-- Features -->
+179|        <section>
+180|          <h2 class="font-display text-3xl font-bold mb-6">Key Features</h2>
+181|          
+182|          <h3>🔐 Encrypted Transfers</h3>
+183|          <p>Transactions appear as generic pool deposits. No third party can link deposits to withdrawals or identify transaction participants.</p>
+184|          
+185|          <h3>⚡ Cryptographic Guarantees</h3>
+186|          <p>ZK proofs provide mathematical certainty that transactions are valid without exposing underlying data. Smart contracts verify proofs on-chain.</p>
+187|          
+188|          <h3>🤖 Agent Compatible</h3>
+189|          <p>AEGIS is designed for autonomous agents making on-chain transactions. Agents can transact privately without revealing their activity patterns.</p>
+190|          
+191|          <h3>📦 Modular Design</h3>
+192|          <p>Privacy is provided as a modular component. Applications can integrate AEGIS to add privacy to any on-chain interaction.</p>
+193|          
+194|          <h3>🔗 Base Native</h3>
+195|          <p>Deployed on Base, AEGIS benefits from Ethereum's security with lower gas costs. Fast, affordable private transactions.</p>
+196|        </section>
+197|
+198|        <!-- Security -->
+199|        <section>
+200|          <h2 class="font-display text-3xl font-bold mb-6">Security Model</h2>
+201|          
+202|          <h3>Double-Spend Prevention</h3>
+203|          <p>Nullifier tracking prevents spending the same note twice. Once a note is withdrawn, its nullifier is marked as spent on-chain.</p>
+204|          
+205|          <h3>Proof Verification</h3>
+206|          <p>All ZK proofs are verified on-chain using cryptographic verifier contracts. Invalid proofs are rejected by the smart contract.</p>
+207|          
+208|          <h3>No Private Key Exposure</h3>
+209|          <p>Your secret and nullifier are never exposed to the blockchain. Only derived values (commitments, nullifiers) are recorded on-chain.</p>
+210|          
+211|          <h3>Amount Privacy</h3>
+212|          <p>Transaction amounts are hidden. Deposits and withdrawals appear identical on-chain, masking transaction size.</p>
+213|        </section>
+214|
+215|        <!-- Smart Contracts -->
+216|        <section>
+217|          <h2 class="font-display text-3xl font-bold mb-6">Smart Contracts</h2>
+218|          
+219|          <h3>AegisShield</h3>
+220|          <p>The core privacy contract. Manages deposits, tracks commitments and nullifiers, and processes withdrawals with ZK proof verification.</p>
+221|          <ul>
+222|            <li><code>deposit(bytes32 commitment)</code> - Deposit ETH with commitment hash</li>
+223|            <li><code>withdraw(proof, nullifier, to, amount)</code> - Withdraw with ZK proof</li>
+224|            <li><code>getBalance()</code> - Query pool liquidity</li>
+225|          </ul>
+226|          
+227|          <h3>AegisPool</h3>
+228|          <p>Liquidity pool for protocol reserves. Liquidity providers earn fees from protocol activity.</p>
+229|          <ul>
+230|            <li><code>addLiquidity()</code> - Deposit ETH to provide liquidity</li>
+231|            <li><code>removeLiquidity(amount)</code> - Withdraw liquidity with 0.5% fee</li>
+232|            <li><code>getBalance(user)</code> - Query user's LP balance</li>
+233|          </ul>
+234|        </section>
+235|
+236|        <!-- Use Cases -->
+237|        <section>
+238|          <h2 class="font-display text-3xl font-bold mb-6">Use Cases</h2>
+239|          
+240|          <h3>Private Payments</h3>
+241|          <p>Send ETH to anyone without revealing transaction details. Ideal for personal finances, business payments, and confidential transfers.</p>
+242|          
+243|          <h3>AI Agent Autonomy</h3>
+244|          <p>Autonomous agents can transact on-chain without exposing their activity patterns. Enables truly private autonomous operation.</p>
+245|          
+246|          <h3>Institutional Finance</h3>
+247|          <p>Organizations can interact on-chain while maintaining confidentiality. Complies with privacy regulations and competitive secrecy.</p>
+248|          
+249|          <h3>Cross-Border Transfers</h3>
+250|          <p>Send value across borders without surveillance. No restrictions on transaction amounts or destination addresses.</p>
+251|          
+252|          <h3>DeFi Privacy</h3>
+253|          <p>Use AEGIS to add privacy to DeFi interactions. Shields portfolio activity, trading strategies, and liquidity provision from public view.</p>
+254|        </section>
+255|
+256|        <!-- Getting Started -->
+257|        <section>
+258|          <h2 class="font-display text-3xl font-bold mb-6">Getting Started</h2>
+259|          
+260|          <h3>1. Connect Wallet</h3>
+261|          <p>Use the AEGIS Console to connect your MetaMask or Web3 wallet. Make sure you're on the Base network.</p>
+262|          
+263|          <h3>2. Deposit ETH</h3>
+264|          <p>Enter the amount of ETH you want to shield. Generate a commitment hash (secret + nullifier). Submit to the smart contract.</p>
+265|          
+266|          <h3>3. Generate Proof</h3>
+267|          <p>When ready to withdraw, the Console generates a ZK proof proving your ownership without exposing your secret.</p>
+268|          
+269|          <h3>4. Withdraw</h3>
+270|          <p>Submit the proof to withdraw to any address. The transaction completes in seconds with privacy maintained.</p>
+271|        </section>
+272|
+273|        <!-- FAQ -->
+274|        <section>
+275|          <h2 class="font-display text-3xl font-bold mb-6">Frequently Asked Questions</h2>
+276|          
+277|          <h3>Is AEGIS safe?</h3>
+278|          <p>AEGIS uses proven cryptographic techniques (ZK proofs, Poseidon hashing) to provide security guarantees. Smart contracts are audited and verified on-chain.</p>
+279|          
+280|          <h3>How much does it cost?</h3>
+281|          <p>Gas costs depend on network conditions. Base provides lower fees than Ethereum mainnet. Pool withdrawals incur a 0.5% protocol fee.</p>
+282|          
+283|          <h3>Is it really private?</h3>
+284|          <p>Yes. Your identity, transaction amount, and counterparty are hidden. Only ZK proofs verify transaction validity on-chain.</p>
+285|          
+286|          <h3>Can I withdraw to any address?</h3>
+287|          <p>Yes. AEGIS is designed to support withdrawals to any address. No KYC or restrictions.</p>
+288|          
+289|          <h3>What happens if I lose my secret?</h3>
+290|          <p>Your funds become unrecoverable. Store your secret securely. AEGIS is non-custodial — only you control access to your deposits.</p>
+291|          
+292|          <h3>Is this legal?</h3>
+293|          <p>AEGIS is a privacy technology. Legality depends on jurisdiction and use case. Consult local laws before using.</p>
+294|        </section>
+295|
+296|        <!-- Support -->
+297|        <section>
+298|          <h2 class="font-display text-3xl font-bold mb-6">Support & Community</h2>
+299|          <p>Have questions? Join the community:</p>
+300|          <ul>
+301|            <li><strong>Twitter:</strong> <a href="https://x.com/Aegiszkp" class="text-accent hover:underline" target="_blank">@Aegiszkp</a></li>
+302|            <li><strong>GitHub:</strong> <a href="https://github.com/aegis37/aegis-protocol" class="text-accent hover:underline" target="_blank">aegis37/aegis-protocol</a></li>
+303|            <li><strong>Website:</strong> <a href="https://aegiszkp.netlify.app" class="text-accent hover:underline" target="_blank">aegiszkp.netlify.app</a></li>
+304|          </ul>
+305|        </section>
+306|      </div>
+307|    </div>
+308|  </div>
+309|
+310|  <!-- CONSOLE PAGE -->
+311|  <div id="consolePage" class="hidden pt-24 pb-12 px-6">
+312|    <div class="max-w-2xl mx-auto">
+313|      <div class="text-center mb-12">
+314|        <h1 class="font-display text-5xl font-bold mb-4">Shielded <span class="text-gradient">Console</span></h1>
+315|        <p class="text-gray-400">#PrivacyByDefault</p>
+316|      </div>
+317|
+318|      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
+319|        <h2 class="font-display text-xl font-bold mb-4">Connect Wallet</h2>
+320|        <button id="connectBtn" class="btn-primary w-full">🔗 Connect MetaMask</button>
+321|        <p class="text-gray-500 text-sm mt-4 text-center">Your keys stay secure. AEGIS never touches private data.</p>
+322|      </div>
+323|
+324|      <div id="operationsDiv" class="hidden">
+325|        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
+326|          <h3 class="font-display font-bold mb-4">🔐 Shield Assets</h3>
+327|          <input type="number" id="depositAmount" class="input-field mb-4" placeholder="Amount (ETH)" min="0.001" step="0.01">
+328|          <button id="depositBtn" class="btn-primary w-full">Deposit to Shield</button>
+329|        </div>
+330|
+331|        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
+332|          <h3 class="font-display font-bold mb-4">🔓 Withdraw</h3>
+333|          <input type="number" id="withdrawAmount" class="input-field mb-4" placeholder="Amount (ETH)" min="0.001" step="0.01">
+334|          <input type="text" id="recipientAddr" class="input-field mb-4" placeholder="Recipient address">
+335|          <button id="withdrawBtn" class="btn-primary w-full">Generate Proof & Withdraw</button>
+336|        </div>
+337|
+338|        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+339|          <h3 class="font-display font-bold mb-4">Activity Log</h3>
+340|          <div id="activityLog" class="space-y-2 font-mono text-xs text-accent max-h-64 overflow-y-auto">
+341|            <p class="text-gray-500">Ready...</p>
+342|          </div>
+343|        </div>
+344|      </div>
+345|    </div>
+346|  </div>
+347|
+  <!-- Contracts -->
+  <section class="border-t border-gray-800 py-12 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-display text-3xl font-bold mb-4">Deployed Contracts</h2>
+      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 inline-block">
+        <p class="text-sm text-gray-400 mb-2">$AEGIS Token · Base</p>
+        <code class="text-accent text-sm break-all">0x04C9733980c1703ED339769AFF6e6EBa80535B07</code>
+        <div class="mt-3">
+          <a href="https://basescan.org/token/0x04C9733980c1703ED339769AFF6e6EBa80535B07" target="_blank" class="text-sm text-accent hover:underline">BaseScan ↗</a>
+          <span class="text-gray-600 mx-2">·</span>
+          <a href="https://www.clanker.world/clanker/0x04C9733980c1703ED339769AFF6e6EBa80535B07" target="_blank" class="text-sm text-accent hover:underline">Clanker ↗</a>
+        </div>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- HOME PAGE -->
-  <div id="homePage" class="pt-32">
-    <section class="max-w-6xl mx-auto px-6 py-24 text-center">
-      <div class="mb-6 inline-block bg-green-900/20 border border-green-800 rounded-full px-4 py-2 text-green-400 text-sm">● Live on Base</div>
-      <h1 class="font-display text-6xl font-bold mb-6 leading-tight">
-        Programmable<br><span class="text-gradient">Privacy</span> Infrastructure
-      </h1>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-        Shield your on-chain activity with zero-knowledge proofs. AEGIS provides modular privacy tools for individuals, applications, and autonomous agents on Base.
-      </p>
-      <div class="flex justify-center gap-4">
-        <button id="btnLaunchConsole" class="btn-primary">Launch Console</button>
-        <button id="btnReadDocs" class="border border-gray-700 text-white px-6 py-3 rounded-lg hover:border-accent transition">Read Docs</button>
-      </div>
-    </section>
-
-    <section id="features" class="max-w-6xl mx-auto px-6 py-24">
-      <h2 class="font-display text-4xl font-bold mb-16 text-center">Built for Privacy</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-accent transition">
-          <div class="text-3xl mb-4">🔐</div>
-          <h3 class="font-display font-bold mb-2">Encrypted Transfers</h3>
-          <p class="text-gray-400 text-sm">Transactions appear as generic pool deposits, hiding sender, recipient, and amount.</p>
-        </div>
-        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-accent transition">
-          <div class="text-3xl mb-4">⚡</div>
-          <h3 class="font-display font-bold mb-2">ZK Proof Verification</h3>
-          <p class="text-gray-400 text-sm">Cryptographic proofs validate transactions without exposing underlying data.</p>
-        </div>
-        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-accent transition">
-          <div class="text-3xl mb-4">🤖</div>
-          <h3 class="font-display font-bold mb-2">Agent Compatible</h3>
-          <p class="text-gray-400 text-sm">Designed for AI agents. Shield autonomous on-chain activity from surveillance.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="how" class="max-w-6xl mx-auto px-6 py-24 bg-gray-900/30">
-      <h2 class="font-display text-4xl font-bold mb-16 text-center">How It Works</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="w-12 h-12 bg-accent text-dark font-bold rounded-full flex items-center justify-center text-xl mx-auto mb-4">1</div>
-          <h3 class="font-display font-bold mb-2">Deposit</h3>
-          <p class="text-gray-400 text-sm">Send ETH to AEGIS Shield. Funds enter the privacy pool.</p>
-        </div>
-        <div class="text-center">
-          <div class="w-12 h-12 bg-accent text-dark font-bold rounded-full flex items-center justify-center text-xl mx-auto mb-4">2</div>
-          <h3 class="font-display font-bold mb-2">Prove</h3>
-          <p class="text-gray-400 text-sm">Generate ZK proof confirming ownership without revealing details.</p>
-        </div>
-        <div class="text-center">
-          <div class="w-12 h-12 bg-accent text-dark font-bold rounded-full flex items-center justify-center text-xl mx-auto mb-4">3</div>
-          <h3 class="font-display font-bold mb-2">Withdraw</h3>
-          <p class="text-gray-400 text-sm">Transfer to any address. Pool origin is shielded.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="max-w-6xl mx-auto px-6 py-24 text-center">
-      <h2 class="font-display text-4xl font-bold mb-6">Start Building with AEGIS</h2>
-      <p class="text-gray-400 mb-8 text-lg">Privacy should be the default for everyone.</p>
-      <button id="btnConsoleBottom" class="btn-primary inline-block">Launch Console →</button>
-    </section>
-  </div>
-
-  <!-- DOCS PAGE -->
-  <div id="docsPage" class="hidden pt-32 pb-16">
-    <div class="max-w-4xl mx-auto px-6">
-      <button id="backToDocs" class="text-accent mb-6 hover:text-white transition">← Back to Home</button>
-      
-      <h1 class="font-display text-5xl font-bold mb-4">AEGIS Documentation</h1>
-      <p class="text-gray-400 mb-12">Complete guide to the programmable privacy infrastructure on Base.</p>
-
-      <div class="docs-content space-y-12">
-        <!-- Overview -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Overview</h2>
-          <p>AEGIS is a privacy infrastructure protocol designed for Base, enabling on-chain activity to be shielded from public view using zero-knowledge proofs. It provides modular privacy tools for individuals, applications, and autonomous AI agents.</p>
-          <p>The protocol consists of two core smart contracts: <code>AegisShield</code> for privacy pool management and <code>AegisPool</code> for liquidity provision.</p>
-        </section>
-
-        <!-- Why Privacy -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Why Privacy Matters</h2>
-          <h3>On-Chain Surveillance</h3>
-          <p>Every transaction on public blockchains is permanently recorded and visible to everyone. This creates privacy risks for individuals and businesses who want confidential financial activity.</p>
-          
-          <h3>AI Agent Privacy</h3>
-          <p>Autonomous agents making financial decisions on-chain face surveillance risks. AEGIS shields agent transactions from public observation, enabling trustless autonomous operation.</p>
-          
-          <h3>Regulatory Compliance</h3>
-          <p>Privacy-preserving transfers help organizations comply with data protection regulations while maintaining blockchain transparency.</p>
-        </section>
-
-        <!-- Core Concepts -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Core Concepts</h2>
-          
-          <h3>Zero-Knowledge Proofs</h3>
-          <p>ZK proofs allow you to prove knowledge of information without revealing the information itself. AEGIS uses ZK proofs to verify transaction validity without exposing sender, recipient, or amount.</p>
-          
-          <h3>Privacy Pools</h3>
-          <p>AEGIS pools are shared liquidity pools where deposits are mixed. Withdrawals can come from the pool without revealing which deposit a withdrawal originated from, breaking the transaction chain.</p>
-          
-          <h3>Commitment Hash</h3>
-          <p>When depositing, you generate a commitment hash (Poseidon hash) derived from your secret and nullifier. This commitment is stored on-chain but reveals nothing about your deposit.</p>
-          
-          <h3>Nullifier</h3>
-          <p>To prevent double-spending, AEGIS tracks nullifiers. Each withdrawal uses a unique nullifier that is marked as spent, preventing the same note from being withdrawn twice.</p>
-        </section>
-
-        <!-- How It Works -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">How It Works</h2>
-          
-          <h3>Step 1: Deposit</h3>
-          <p>You send ETH to the AegisShield contract along with a commitment hash. Your funds are locked in the privacy pool. Your secret and nullifier remain unknown.</p>
-          
-          <h3>Step 2: Generate Proof</h3>
-          <p>When ready to withdraw, you generate a ZK proof that proves:</p>
-          <ul>
-            <li>You know the secret matching your commitment</li>
-            <li>Your nullifier hasn't been used before</li>
-            <li>You have sufficient balance</li>
-          </ul>
-          
-          <h3>Step 3: Withdraw</h3>
-          <p>You submit the ZK proof to withdraw funds to any address. The smart contract verifies the proof without learning your identity or original deposit details. Your nullifier is marked as spent.</p>
-        </section>
-
-        <!-- Features -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Key Features</h2>
-          
-          <h3>🔐 Encrypted Transfers</h3>
-          <p>Transactions appear as generic pool deposits. No third party can link deposits to withdrawals or identify transaction participants.</p>
-          
-          <h3>⚡ Cryptographic Guarantees</h3>
-          <p>ZK proofs provide mathematical certainty that transactions are valid without exposing underlying data. Smart contracts verify proofs on-chain.</p>
-          
-          <h3>🤖 Agent Compatible</h3>
-          <p>AEGIS is designed for autonomous agents making on-chain transactions. Agents can transact privately without revealing their activity patterns.</p>
-          
-          <h3>📦 Modular Design</h3>
-          <p>Privacy is provided as a modular component. Applications can integrate AEGIS to add privacy to any on-chain interaction.</p>
-          
-          <h3>🔗 Base Native</h3>
-          <p>Deployed on Base, AEGIS benefits from Ethereum's security with lower gas costs. Fast, affordable private transactions.</p>
-        </section>
-
-        <!-- Security -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Security Model</h2>
-          
-          <h3>Double-Spend Prevention</h3>
-          <p>Nullifier tracking prevents spending the same note twice. Once a note is withdrawn, its nullifier is marked as spent on-chain.</p>
-          
-          <h3>Proof Verification</h3>
-          <p>All ZK proofs are verified on-chain using cryptographic verifier contracts. Invalid proofs are rejected by the smart contract.</p>
-          
-          <h3>No Private Key Exposure</h3>
-          <p>Your secret and nullifier are never exposed to the blockchain. Only derived values (commitments, nullifiers) are recorded on-chain.</p>
-          
-          <h3>Amount Privacy</h3>
-          <p>Transaction amounts are hidden. Deposits and withdrawals appear identical on-chain, masking transaction size.</p>
-        </section>
-
-        <!-- Smart Contracts -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Smart Contracts</h2>
-          
-          <h3>AegisShield</h3>
-          <p>The core privacy contract. Manages deposits, tracks commitments and nullifiers, and processes withdrawals with ZK proof verification.</p>
-          <ul>
-            <li><code>deposit(bytes32 commitment)</code> - Deposit ETH with commitment hash</li>
-            <li><code>withdraw(proof, nullifier, to, amount)</code> - Withdraw with ZK proof</li>
-            <li><code>getBalance()</code> - Query pool liquidity</li>
-          </ul>
-          
-          <h3>AegisPool</h3>
-          <p>Liquidity pool for protocol reserves. Liquidity providers earn fees from protocol activity.</p>
-          <ul>
-            <li><code>addLiquidity()</code> - Deposit ETH to provide liquidity</li>
-            <li><code>removeLiquidity(amount)</code> - Withdraw liquidity with 0.5% fee</li>
-            <li><code>getBalance(user)</code> - Query user's LP balance</li>
-          </ul>
-        </section>
-
-        <!-- Use Cases -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Use Cases</h2>
-          
-          <h3>Private Payments</h3>
-          <p>Send ETH to anyone without revealing transaction details. Ideal for personal finances, business payments, and confidential transfers.</p>
-          
-          <h3>AI Agent Autonomy</h3>
-          <p>Autonomous agents can transact on-chain without exposing their activity patterns. Enables truly private autonomous operation.</p>
-          
-          <h3>Institutional Finance</h3>
-          <p>Organizations can interact on-chain while maintaining confidentiality. Complies with privacy regulations and competitive secrecy.</p>
-          
-          <h3>Cross-Border Transfers</h3>
-          <p>Send value across borders without surveillance. No restrictions on transaction amounts or destination addresses.</p>
-          
-          <h3>DeFi Privacy</h3>
-          <p>Use AEGIS to add privacy to DeFi interactions. Shields portfolio activity, trading strategies, and liquidity provision from public view.</p>
-        </section>
-
-        <!-- Getting Started -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Getting Started</h2>
-          
-          <h3>1. Connect Wallet</h3>
-          <p>Use the AEGIS Console to connect your MetaMask or Web3 wallet. Make sure you're on the Base network.</p>
-          
-          <h3>2. Deposit ETH</h3>
-          <p>Enter the amount of ETH you want to shield. Generate a commitment hash (secret + nullifier). Submit to the smart contract.</p>
-          
-          <h3>3. Generate Proof</h3>
-          <p>When ready to withdraw, the Console generates a ZK proof proving your ownership without exposing your secret.</p>
-          
-          <h3>4. Withdraw</h3>
-          <p>Submit the proof to withdraw to any address. The transaction completes in seconds with privacy maintained.</p>
-        </section>
-
-        <!-- FAQ -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Frequently Asked Questions</h2>
-          
-          <h3>Is AEGIS safe?</h3>
-          <p>AEGIS uses proven cryptographic techniques (ZK proofs, Poseidon hashing) to provide security guarantees. Smart contracts are audited and verified on-chain.</p>
-          
-          <h3>How much does it cost?</h3>
-          <p>Gas costs depend on network conditions. Base provides lower fees than Ethereum mainnet. Pool withdrawals incur a 0.5% protocol fee.</p>
-          
-          <h3>Is it really private?</h3>
-          <p>Yes. Your identity, transaction amount, and counterparty are hidden. Only ZK proofs verify transaction validity on-chain.</p>
-          
-          <h3>Can I withdraw to any address?</h3>
-          <p>Yes. AEGIS is designed to support withdrawals to any address. No KYC or restrictions.</p>
-          
-          <h3>What happens if I lose my secret?</h3>
-          <p>Your funds become unrecoverable. Store your secret securely. AEGIS is non-custodial — only you control access to your deposits.</p>
-          
-          <h3>Is this legal?</h3>
-          <p>AEGIS is a privacy technology. Legality depends on jurisdiction and use case. Consult local laws before using.</p>
-        </section>
-
-        <!-- Support -->
-        <section>
-          <h2 class="font-display text-3xl font-bold mb-6">Support & Community</h2>
-          <p>Have questions? Join the community:</p>
-          <ul>
-            <li><strong>Twitter:</strong> <a href="https://x.com/Aegiszkp" class="text-accent hover:underline" target="_blank">@Aegiszkp</a></li>
-            <li><strong>GitHub:</strong> <a href="https://github.com/aegis37/aegis-protocol" class="text-accent hover:underline" target="_blank">aegis37/aegis-protocol</a></li>
-            <li><strong>Website:</strong> <a href="https://aegiszkp.netlify.app" class="text-accent hover:underline" target="_blank">aegiszkp.netlify.app</a></li>
-          </ul>
-        </section>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONSOLE PAGE -->
-  <div id="consolePage" class="hidden pt-24 pb-12 px-6">
-    <div class="max-w-2xl mx-auto">
-      <div class="text-center mb-12">
-        <h1 class="font-display text-5xl font-bold mb-4">Shielded <span class="text-gradient">Console</span></h1>
-        <p class="text-gray-400">#PrivacyByDefault</p>
-      </div>
-
-      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
-        <h2 class="font-display text-xl font-bold mb-4">Connect Wallet</h2>
-        <button id="connectBtn" class="btn-primary w-full">🔗 Connect MetaMask</button>
-        <p class="text-gray-500 text-sm mt-4 text-center">Your keys stay secure. AEGIS never touches private data.</p>
-      </div>
-
-      <div id="operationsDiv" class="hidden">
-        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
-          <h3 class="font-display font-bold mb-4">🔐 Shield Assets</h3>
-          <input type="number" id="depositAmount" class="input-field mb-4" placeholder="Amount (ETH)" min="0.001" step="0.01">
-          <button id="depositBtn" class="btn-primary w-full">Deposit to Shield</button>
-        </div>
-
-        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 mb-8">
-          <h3 class="font-display font-bold mb-4">🔓 Withdraw</h3>
-          <input type="number" id="withdrawAmount" class="input-field mb-4" placeholder="Amount (ETH)" min="0.001" step="0.01">
-          <input type="text" id="recipientAddr" class="input-field mb-4" placeholder="Recipient address">
-          <button id="withdrawBtn" class="btn-primary w-full">Generate Proof & Withdraw</button>
-        </div>
-
-        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
-          <h3 class="font-display font-bold mb-4">Activity Log</h3>
-          <div id="activityLog" class="space-y-2 font-mono text-xs text-accent max-h-64 overflow-y-auto">
-            <p class="text-gray-500">Ready...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="border-t border-gray-800 py-6 px-6 text-center text-gray-500 text-sm">
-    <p>🛡️ AEGIS Privacy Infrastructure on Base • <a href="https://github.com/aegis37/aegis-protocol" class="text-accent">GitHub</a> • <a href="https://x.com/Aegiszkp" class="text-accent">Twitter</a></p>
-  </footer>
-
-  <script>
-    // Page Navigation
-    const homePage = document.getElementById('homePage');
-    const docsPage = document.getElementById('docsPage');
-    const consolePage = document.getElementById('consolePage');
-    const navHome = document.getElementById('navHome');
-    const navDocs = document.getElementById('navDocs');
-    const navConsole = document.getElementById('navConsole');
-    const btnLaunchConsole = document.getElementById('btnLaunchConsole');
-    const btnReadDocs = document.getElementById('btnReadDocs');
-    const btnConsoleBottom = document.getElementById('btnConsoleBottom');
-    const backToDocs = document.getElementById('backToDocs');
-
-    function showHome() {
-      homePage.classList.remove('hidden');
-      docsPage.classList.add('hidden');
-      consolePage.classList.add('hidden');
-      window.scrollTo(0, 0);
-    }
-
-    function showDocs() {
-      homePage.classList.add('hidden');
-      docsPage.classList.remove('hidden');
-      consolePage.classList.add('hidden');
-      window.scrollTo(0, 0);
-    }
-
-    function showConsole() {
-      homePage.classList.add('hidden');
-      docsPage.classList.add('hidden');
-      consolePage.classList.remove('hidden');
-      window.scrollTo(0, 0);
-    }
-
-    navHome.addEventListener('click', showHome);
-    navDocs.addEventListener('click', showDocs);
-    navConsole.addEventListener('click', showConsole);
-    btnLaunchConsole.addEventListener('click', showConsole);
-    btnReadDocs.addEventListener('click', showDocs);
-    btnConsoleBottom.addEventListener('click', showConsole);
-    backToDocs.addEventListener('click', showHome);
-
-    // Console Logic
-    let connected = false;
-
-    function log(msg) {
-      const el = document.getElementById('activityLog');
-      const entry = document.createElement('p');
-      entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
-      el.insertBefore(entry, el.firstChild);
-    }
-
-    document.getElementById('connectBtn').addEventListener('click', async () => {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
-          document.getElementById('connectBtn').textContent = `✓ ${accounts[0].slice(0,6)}...`;
-          document.getElementById('connectBtn').disabled = true;
-          document.getElementById('operationsDiv').classList.remove('hidden');
-          connected = true;
-          log(`Connected: ${accounts[0]}`);
-        } catch(e) { log('Connection failed'); }
-      } else { alert('MetaMask required'); }
-    });
-
-    document.getElementById('depositBtn').addEventListener('click', () => {
-      if (!connected) { alert('Connect wallet first'); return; }
-      const amt = document.getElementById('depositAmount').value;
-      if (!amt) return;
-      log(`→ Deposit ${amt} ETH initiated`);
-      log(`→ Generating proof...`);
-      setTimeout(() => { log(`✓ Shielded (proof verified)`); }, 2000);
-    });
-
-    document.getElementById('withdrawBtn').addEventListener('click', () => {
-      if (!connected) { alert('Connect wallet first'); return; }
-      const amt = document.getElementById('withdrawAmount').value;
-      const addr = document.getElementById('recipientAddr').value.slice(0,8);
-      if (!amt || !addr) return;
-      log(`→ Withdraw ${amt} ETH to ${addr}...`);
-      log(`→ Generating proof...`);
-      setTimeout(() => { log(`✓ Withdrawn (privacy maintained)`); }, 2500);
-    });
-
-    log('Console ready');
-  </script>
-</body>
-</html>
+348|  <!-- Footer -->
+349|  <footer class="border-t border-gray-800 py-6 px-6 text-center text-gray-500 text-sm">
+350|    <p>🛡️ AEGIS Privacy Infrastructure on Base • <a href="https://github.com/aegis37/aegis-protocol" class="text-accent">GitHub</a> • <a href="https://x.com/Aegiszkp" class="text-accent">Twitter</a></p>
+351|  </footer>
+352|
+353|  <script>
+354|    // Page Navigation
+355|    const homePage = document.getElementById('homePage');
+356|    const docsPage = document.getElementById('docsPage');
+357|    const consolePage = document.getElementById('consolePage');
+358|    const navHome = document.getElementById('navHome');
+359|    const navDocs = document.getElementById('navDocs');
+360|    const navConsole = document.getElementById('navConsole');
+361|    const btnLaunchConsole = document.getElementById('btnLaunchConsole');
+362|    const btnReadDocs = document.getElementById('btnReadDocs');
+363|    const btnConsoleBottom = document.getElementById('btnConsoleBottom');
+364|    const backToDocs = document.getElementById('backToDocs');
+365|
+366|    function showHome() {
+367|      homePage.classList.remove('hidden');
+368|      docsPage.classList.add('hidden');
+369|      consolePage.classList.add('hidden');
+370|      window.scrollTo(0, 0);
+371|    }
+372|
+373|    function showDocs() {
+374|      homePage.classList.add('hidden');
+375|      docsPage.classList.remove('hidden');
+376|      consolePage.classList.add('hidden');
+377|      window.scrollTo(0, 0);
+378|    }
+379|
+380|    function showConsole() {
+381|      homePage.classList.add('hidden');
+382|      docsPage.classList.add('hidden');
+383|      consolePage.classList.remove('hidden');
+384|      window.scrollTo(0, 0);
+385|    }
+386|
+387|    navHome.addEventListener('click', showHome);
+388|    navDocs.addEventListener('click', showDocs);
+389|    navConsole.addEventListener('click', showConsole);
+390|    btnLaunchConsole.addEventListener('click', showConsole);
+391|    btnReadDocs.addEventListener('click', showDocs);
+392|    btnConsoleBottom.addEventListener('click', showConsole);
+393|    backToDocs.addEventListener('click', showHome);
+394|
+395|    // Console Logic
+396|    let connected = false;
+397|
+398|    function log(msg) {
+399|      const el = document.getElementById('activityLog');
+400|      const entry = document.createElement('p');
+401|      entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+402|      el.insertBefore(entry, el.firstChild);
+403|    }
+404|
+405|    document.getElementById('connectBtn').addEventListener('click', async () => {
+406|      if (typeof window.ethereum !== 'undefined') {
+407|        try {
+408|          const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+409|          document.getElementById('connectBtn').textContent = `✓ ${accounts[0].slice(0,6)}...`;
+410|          document.getElementById('connectBtn').disabled = true;
+411|          document.getElementById('operationsDiv').classList.remove('hidden');
+412|          connected = true;
+413|          log(`Connected: ${accounts[0]}`);
+414|        } catch(e) { log('Connection failed'); }
+415|      } else { alert('MetaMask required'); }
+416|    });
+417|
+418|    document.getElementById('depositBtn').addEventListener('click', () => {
+419|      if (!connected) { alert('Connect wallet first'); return; }
+420|      const amt = document.getElementById('depositAmount').value;
+421|      if (!amt) return;
+422|      log(`→ Deposit ${amt} ETH initiated`);
+423|      log(`→ Generating proof...`);
+424|      setTimeout(() => { log(`✓ Shielded (proof verified)`); }, 2000);
+425|    });
+426|
+427|    document.getElementById('withdrawBtn').addEventListener('click', () => {
+428|      if (!connected) { alert('Connect wallet first'); return; }
+429|      const amt = document.getElementById('withdrawAmount').value;
+430|      const addr = document.getElementById('recipientAddr').value.slice(0,8);
+431|      if (!amt || !addr) return;
+432|      log(`→ Withdraw ${amt} ETH to ${addr}...`);
+433|      log(`→ Generating proof...`);
+434|      setTimeout(() => { log(`✓ Withdrawn (privacy maintained)`); }, 2500);
+435|    });
+436|
+437|    log('Console ready');
+438|  </script>
+439|</body>
+440|</html>
+441|
